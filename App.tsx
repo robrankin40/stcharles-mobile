@@ -16,6 +16,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import 'react-native-gesture-handler';
 
 import {
   Colors,
