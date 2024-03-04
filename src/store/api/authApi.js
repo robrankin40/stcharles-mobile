@@ -12,21 +12,22 @@ export const authApi = api.injectEndpoints({
     }),
     join: builder.mutation({
       query: ({email, inviteCode}) => ({
-        url: 'users/join',
+        url: 'auth/join',
         method: 'POST',
         body: {email, inviteCode},
       }),
       invalidatesTags: ['Auth'],
     }),
     updatePassword: builder.mutation({
-      query: ({email, password}) => ({
+      query: ({oldPassword, password}) => ({
         url: 'users/update-password',
         method: 'PUT',
-        body: {email, password},
+        body: {oldPassword, password},
       }),
       invalidatesTags: ['Auth'],
     }),
   }),
 });
 
-export const {useLoginMutation} = authApi;
+export const {useLoginMutation, useJoinMutation, useUpdatePasswordMutation} =
+  authApi;

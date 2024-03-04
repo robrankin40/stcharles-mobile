@@ -7,6 +7,7 @@ const initialState = {
   isAuthenticated: false,
   isTempPasswordReady: false,
   temporaryPassword: null,
+  errorMessage: null,
 };
 
 const slice = createSlice({
@@ -24,22 +25,45 @@ const slice = createSlice({
           email: action.payload.data.email,
           firstName: action.payload.data.firstName,
           lastName: action.payload.data.lastName,
+          status: action.payload.data.status,
         };
         state.isAuthenticated = true;
         state.token = action.payload.data.token;
       })
-      .addMatcher(
-        authApi.endpoints.login.matchRejected,
-        (_, action) => initialState,
-      )
+      .addMatcher(authApi.endpoints.login.matchRejected, (_, action) => {
+        return {
+          ...initialState,
+          errorMessage: action.payload.data.message,
+        };
+      })
       .addMatcher(authApi.endpoints.join.matchFulfilled, (state, action) => {
         state.isTempPasswordReady = true;
         state.temporaryPassword = action.payload.password;
-      });
+      })
+      .addMatcher(authApi.endpoints.join.matchRejected, (_, action) => {
+        return {
+          ...initialState,
+          errorMessage: action.payload.data.message,
+        };
+      })
+      .addMatcher(
+        authApi.endpoints.updatePassword.matchRejected,
+        (_, action) => {
+          return {
+            ...initialState,
+            errorMessage: action.payload.data.message,
+          };
+        },
+      );
   },
 });
 
-export const {logout} = slice.actions;
+export const {logout, resetAuth} = slice.actions;
 export default slice.reducer;
 
 export const selectIsAuthenticated = state => state.auth.isAuthenticated;
+export const selectTempPassword = state => state.auth.temporaryPassword;
+export const selectIsTempPasswordReady = state =>
+  state.auth.isTempPasswordReady;
+export const selectAuthErrorMessage = state => state.auth.errorMessage;
+export const selectUserStatus = state => state.auth.user?.status;
