@@ -10,7 +10,7 @@ export const scheduleManagerApi = api.injectEndpoints({
           startTime: start.valueOf(),
           endTime: end ? end.valueOf() : undefined,
         });
-        return `schedules/${timeRangeQuery}`;
+        return `schedule?${timeRangeQuery}`;
       },
       transformResponse: (response, meta, args) => response.schedules,
       providesTags: result => {
@@ -22,7 +22,7 @@ export const scheduleManagerApi = api.injectEndpoints({
     }),
     createSchedule: builder.mutation({
       query: schedule => ({
-        url: 'schedules/',
+        url: 'schedule/',
         method: 'POST',
         body: schedule,
       }),
@@ -30,7 +30,7 @@ export const scheduleManagerApi = api.injectEndpoints({
     }),
     updateSchedule: builder.mutation({
       query: (scheduleId, schedule) => ({
-        url: `schedules/${scheduleId}`,
+        url: `schedule/${scheduleId}`,
         method: 'POST',
         body: schedule,
       }),
@@ -38,7 +38,7 @@ export const scheduleManagerApi = api.injectEndpoints({
     }),
     deleteSchedule: builder.mutation({
       query: id => ({
-        url: `schedules/${id}`,
+        url: `schedule/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: result => [{type: 'Schedules', id: result.scheduleId}],
@@ -48,6 +48,7 @@ export const scheduleManagerApi = api.injectEndpoints({
 
 export const {
   useListScheduleQuery,
+  useLazyListScheduleQuery,
   useCreateScheduleMutation,
   useDeleteScheduleMutation,
 } = scheduleManagerApi;

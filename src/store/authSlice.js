@@ -1,10 +1,24 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {authApi} from './api/authApi';
 
+// const initialState = {
+//   user: null,
+//   token: null,
+//   isAuthenticated: false,
+//   isTempPasswordReady: false,
+//   temporaryPassword: null,
+//   errorMessage: null,
+// };
+
 const initialState = {
-  user: null,
-  token: null,
-  isAuthenticated: false,
+  user: {
+    firstName: 'Rob',
+    lastName: 'Tester',
+    status: 'active',
+  },
+  token:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWU1Y2U1NjRlZTJmNDJhOWU5MzZhMWIiLCJpYXQiOjE3MDk1NzkxOTAsImV4cCI6MTcxMDE4Mzk5MH0.cJULo2vzBv4Zmch7SZztiLp7shYFhdByfUxo4CkniU8',
+  isAuthenticated: true,
   isTempPasswordReady: false,
   temporaryPassword: null,
   errorMessage: null,

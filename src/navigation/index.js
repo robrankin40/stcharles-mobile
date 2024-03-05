@@ -47,8 +47,8 @@ function Navigation() {
         )}
         {isAuthenticated && (
           <React.Fragment>
-            <Stack.Screen name="NewSchedule" component={NewScheduleScreen} />
             <Stack.Screen name="Schedules" component={SchedulesScreen} />
+            <Stack.Screen name="NewSchedule" component={NewScheduleScreen} />
           </React.Fragment>
         )}
       </Stack.Navigator>
